@@ -10,38 +10,32 @@
 </head>
 <body>
 	<canvas id="canvas" width="800" height="800">hola</canvas>
-	<img id = "imagen" src="spiral.jpg" style="display:none">
 	<script type="text/javascript">
 		
 		var cv = document.getElementById('canvas');
 		var ctx = cv.getContext('2d');
+		var super_x=100,super_y=400;
         ctx.font = "30px Arial";
         ctx.fillText("Daniel Sanchez",130,50);
 		ctx.strokeText("Daniel Sanchez",300,50);
-
 		var grd = ctx.createLinearGradient(0,0,600,0);
 		grd.addColorStop(0,"yellow");
 		grd.addColorStop(1,"blue");
-
 		
 		/*ctx.fillStyle = "green";
 		ctx.fillRect(30,30,50,50);	
 		ctx.fillStyle = 'rgba(0,0,200,0.5)';
 		ctx.fillRect(50,60,50,50);	
-
 		ctx.fillStyle = grd;
 		ctx.fillRect(300,50,360,80);	
 		
 		var grd = ctx.createRadialGradient(75,50,5,90,60,100);
 		grd.addColorStop(0,"yellow");
 		grd.addColorStop(1,"blue");
-
 		ctx.fillStyle = grd;
 		ctx.fillRect(0,0,200,200);
 
-		var img = document.getElementById("imagen");
 		ctx.drawImage(img,100,100);
-
 		ctx.beginPath();
 		ctx.arc(200, 75, 50, 0, 2 * Math.PI);
 		ctx.stroke();
@@ -52,6 +46,29 @@
 		*/
 		var color="red";
 		
+		document.addEventListener('keydown',function(e){
+			console.log(e);
+			if(e.keyCode==87 || e.keyCode==38){
+				super_y-=20;
+			}
+			if(e.keyCode==68 || e.keyCode==39){
+				super_x+=20;
+			}
+			if(e.keyCode==83 || e.keyCode==40){
+				super_y+=20;
+			}
+			if(e.keyCode==65 || e.keyCode==37){
+				super_x-=20;
+			}
+			paint();
+		})		
+		
+		function paint(){
+			ctx.fillStyle="white";
+			ctx.fillRect(0,0,800,800);
+			ctx.fillStyle="red";
+			ctx.fillRect(super_x,super_y,50,50);
+		}
 		function generateRandomColor() {
 			var letters = '0123456789ABCDEF';
 			var color = "#";
@@ -60,21 +77,54 @@
 			}
 			return color;
 		}
+		var fig='arc';
+		cv.addEventListener('mouseout',function(){
+			
+			fig=(fig=='arc')?'rec':'arc';
+		})
+
+		var press = false;
+		cv.addEventListener('mousedown',function(){
+			press = true;
+			
+		})
+		cv.addEventListener('mouseup',function(){
+			press = false;
+			
+		})
 		cv.addEventListener('mouseover',function(){
 			
-			color=generateRandomColor();
-			console.log(color);
+			r=Math.floor(Math.random()*(255 - 0) + 1)
+			g=Math.floor(Math.random()*(255 - 0) + 1)
+			b=Math.floor(Math.random()*(255 - 0) + 1)
+			
 		})
+
+		cv.addEventListener('mousemove',function(e){
+			if(press){
+				ctx.fillRect(e.offsetX,e.offsetY,10,10);	
+				ctx.fillStyle = 'rgba(0,0,0,1)';
+			}
+			
+			
+						
+		})
+			
 		cv.addEventListener('click',function(e){
-			console.log(e.x);
-			ctx.fillStyle=color;
-			ctx.beginPath();
-			ctx.arc(e.offsetX, e.offsetY, 50, 0, 2 * Math.PI);
-			ctx.stroke();
-			ctx.fill();
+			if(fig=='arc'){
+				ctx.beginPath();
+				ctx.arc(e.offsetX, e.offsetY, 50, 0, 2 * Math.PI);
+				ctx.fillStyle="rgba("+ r + ","+g+","+b+",0.3)";
+				ctx.stroke();
+				ctx.fill();
+			}else{
+				ctx.fillStyle="rgba("+ r + ","+g+","+b+",0.5)";
+				ctx.fillRect(e.offsetX,e.offsetY,50,50);	
+				ctx.strokeRect(e.offsetX,e.offsetY,50,50)	
+			}
+			
 		});
 			
-
 		/*ctx.moveTo(0,0);
 		ctx.lineTo(300,200);
 		ctx.moveTo(500,200);
@@ -87,7 +137,6 @@
 		ctx.strokeStyle = "blue";
 		ctx.stroke();
 		ctx.fill();
-
 		function circulo(){
 			ctx.beginPath();
 			ctx.arc(600, 75, 50, 0, 2 * Math.PI);
