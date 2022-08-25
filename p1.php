@@ -24,6 +24,7 @@
 		var pared= null;
 		var tiburon = new Image();
 		var moneda = new Image();
+		var audio = new Audio('monedasonido.mp3');
 
         function run(){
                 window.requestAnimationFrame(paint);
@@ -33,7 +34,7 @@
 				pared = new cuadro(100,100,200,100,"grey");
 				player2= new cuadro(Math.random()*800-1,Math.random()*800-1,50,50,"yellow");
 				tiburon.src = "tiburon.png";
-				moneda.src="dinero.png"
+				moneda.src="dinero.png";
                 paint();
         }
 		
@@ -107,6 +108,7 @@
 				score+=10;
 				player2.x= Math.random()*800-1;
 				player2.y= Math.random()*800-1;
+				audio.play();
 			}
 
 			if(player.se_tocan(pared)){
