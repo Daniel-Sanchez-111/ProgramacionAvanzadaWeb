@@ -15,19 +15,27 @@
 		var cv = null;
 		var ctx = null;
         var player= null; 
+		var player2=null;
         var se_tocan=false;
         var direccion='right';
 		var score=0;
-        var speed=10;
+        var speed=5;
+		var pause = false;
+		var pared= null;
+		var tiburon = new Image();
+		var moneda = new Image();
+
         function run(){
                 window.requestAnimationFrame(paint);
                 cv = document.getElementById('canvas');
                 ctx = cv.getContext('2d');
-                player = new  cuadro(0,0,10,10,"blue");
+                player = new  cuadro(0,0,32,32,"blue");
+				//pared = new cuadro(100,100,200,100,"grey");
+				player2= new cuadro(Math.random()*800-1,Math.random()*800-1,50,50,"yellow");
+				tiburon.src = "tiburon.png";
+				moneda.src="dinero.png"
                 paint();
         }
-
-
 		
 		var color="red";
 		
@@ -45,35 +53,77 @@
 			if(e.keyCode==65 || e.keyCode==37){
 				direccion='left';
 			}
-			//paint();
+			if(e.keyCode ==  32){
+				pause = (pause)?false:true;
+			}
 		})		
-
 		window.addEventListener('load',run,false);
-
 		function paint(){
             window.requestAnimationFrame(paint);
             ctx.fillStyle = "red";
-            ctx.fillRect=(0,0,500,500);
-            player.paint(ctx);
+            ctx.fillRect(0,0,800,800);
+            ctx.drawImage(tiburon,player.x,player.y);
+			ctx.drawImage(moneda,player2.x,player2.y);
 			
-            update();
+			//pared.paint(ctx);
+			
+			if(pause){
+				ctx.fillStyle = "gray";
+            	ctx.fillRect(0,0,800,800);
+			}else{
+				update();	
+			}
+            
 		}
 
         function update(){
-            if(direccion='up'){
-				player.y-=speed;
-			}
-			if(direccion='right'){
-				player.x+=speed;;
-			}
-			if(direccion='down'){
-				player.y+=speed;
-			}
-			if(direccion='left'){
-				plauer.x-=speed;
-			}
-        }
 
+            if(direccion=='up'){
+				player.y-=speed;
+				if(player.y<=0){
+					player.y=800;
+				}
+			}
+			if(direccion=='right'){
+				player.x+=speed;;
+				if(player.x>=800){
+					player.x=0;
+				}
+			}
+			if(direccion=='down'){
+				player.y+=speed;
+				if(player.y>=800){
+					player.y=0;
+				}
+			}
+			if(direccion=='left'){
+				player.x-=speed;
+				if(player.x<=0){
+					player.x=800;
+				}
+			}
+			if(player.se_tocan(player2)){
+				speed+=1;
+				score+=10;
+				player2.x= Math.random()*800-1;
+				player2.y= Math.random()*800-1;
+			}
+
+			/*if(player.se_tocan(pared)){
+				if(direccion=="up"){
+					player.y+=speed;
+				}
+				if(direccion=="down"){
+					player.y-=speed;
+				}
+				if(direccion=="left"){
+					player.x+=speed;
+				}
+				if(direccion=="right"){
+					player.x-=speed;
+				}
+			}*/
+        }
 
         window.requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
@@ -93,7 +143,6 @@
             
             this.se_tocan = function(target){
                 if(this.x < target.x + target.w &&
-
                     this.x + this.w > target.x && 
                     this.y < target.y + target.h && 
                     this.y + this.h > target.y)
@@ -101,17 +150,15 @@
                      return true;	 
                         console.log("hola");
                     }  
-
-                    
             
-            this.paint = function(ctx){
+       		 }
+
+			this.paint = function(ctx){
                 ctx.fillStyle=this.c;
                 ctx.fillRect(this.x,this.y,this.w,this.h);
                 ctx.strokeRect(this.x,this.y,this.w,this.h);
             }
-        }
-    }
-
+    	}
 		/*function generateRandomColor() {
 			var letters = '0123456789ABCDEF';
 			var color = "#";
@@ -152,7 +199,6 @@
 		})
 		*/
        
-
 		/*cv.addEventListener('click',function(e){
 			if(fig=='arc'){
 				ctx.beginPath();
