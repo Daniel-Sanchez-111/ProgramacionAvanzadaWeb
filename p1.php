@@ -30,7 +30,7 @@
                 cv = document.getElementById('canvas');
                 ctx = cv.getContext('2d');
                 player = new  cuadro(0,0,32,32,"blue");
-				//pared = new cuadro(100,100,200,100,"grey");
+				pared = new cuadro(100,100,200,100,"grey");
 				player2= new cuadro(Math.random()*800-1,Math.random()*800-1,50,50,"yellow");
 				tiburon.src = "tiburon.png";
 				moneda.src="dinero.png"
@@ -65,7 +65,7 @@
             ctx.drawImage(tiburon,player.x,player.y);
 			ctx.drawImage(moneda,player2.x,player2.y);
 			
-			//pared.paint(ctx);
+			pared.paint(ctx);
 			
 			if(pause){
 				ctx.fillStyle = "gray";
@@ -109,7 +109,7 @@
 				player2.y= Math.random()*800-1;
 			}
 
-			/*if(player.se_tocan(pared)){
+			if(player.se_tocan(pared)){
 				if(direccion=="up"){
 					player.y+=speed;
 				}
@@ -122,7 +122,7 @@
 				if(direccion=="right"){
 					player.x-=speed;
 				}
-			}*/
+			}
         }
 
         window.requestAnimationFrame = (function () {
