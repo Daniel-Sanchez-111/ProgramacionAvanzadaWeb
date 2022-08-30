@@ -21,6 +21,20 @@
         <button @click="suma">suma</button>
 
         <h1>{{sum}}</h1>
+
+        <hr>
+        <input type="text" v-model="edad"> 
+        <hr>
+        
+        
+        <input type="text" v-model="chamacos_name">
+        <input type="text" v-model="chamacos_role">
+        <button @click="save">Guardar</button>
+        <ol>
+            <li v-for="item in chamacos">{{item.name}} : <span> {{item.role}}</span></li>
+        </ol>
+        
+        
     </div>
     
     <script type="text/javascript">
@@ -30,7 +44,7 @@
         data() {
             return {
             name: 'Daniel',lastname:'Sanchez',n1:
-            "0",n2:"0",sum:"0"
+            "0",n2:"0",sum:"0",edad:"0",chamacos:[{name:'ni1',role:'front'},{name:'ni2',role:'bavck'},{name:'ni3',role:'full'}],chamacos_name:"Nombre",chamacos_role:"Rol"
             }
         },
         methods: {
@@ -39,7 +53,11 @@
             },
             suma(){
                 this.sum = (parseInt(this.n1)+parseInt(this.n2))
+            },
+            save(){
+                this.chamacos.push({name:this.chamacos_name,role:this.chamacos_role})
             }
+
         }
         }).mount('#contenedor')
 
