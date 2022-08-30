@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <div id="contenedor">
+        <h1>{{name}}{{lastname}}</h1>
+        <input type="text" v-model="name">
+        
+        
+        <button @click="hola">hola</button>
+
+        <hr>
+        <input type="text" v-model="n1"> 
+        <input type="text" v-model="n2"> 
+        <button @click="suma">suma</button>
+
+        <h1>{{sum}}</h1>
+    </div>
+    
+    <script type="text/javascript">
+        const { createApp } = Vue
+
+        var test = createApp({
+        data() {
+            return {
+            name: 'Daniel',lastname:'Sanchez',n1:
+            "0",n2:"0",sum:"0"
+            }
+        },
+        methods: {
+            hola(){
+                alert("hola")
+            },
+            suma(){
+                this.sum = (parseInt(this.n1)+parseInt(this.n2))
+            }
+        }
+        }).mount('#contenedor')
+
+    </script>
+</body>
+</html>
