@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Registros</title>
+	 <link href="estilo.css" rel="stylesheet" type="text/css">
+	<script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+	<div id="contenedor">
+		<h3>Hola, {{nombre}}</h3>
+
+		<table >
+			<tr>
+				<th>ID</th>
+				<td v-for="item in users">{{item.id}}</td>
+			</tr>
+			<tr>
+				<th>Nombre</th>
+				<td v-for="item in users">{{item.name}}</td>
+			</tr>
+			<tr>
+				<th>Username</th>
+				<td v-for="item in users">{{item.username}}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td v-for="item in users">{{item.email}}</td>
+			</tr>
+		</table>
+		<hr>
+
+		<div class="form">
+
+			<h3>Registrar usuario</h3>
+            <label>Nombre</label>
+           
+            <input type="text" v-model="name">
+            <label>Username</label>
+           
+            <input type="text" v-model="username">
+ 			
+            <label>Correo electronico</label>
+           
+            <input type="email" v-model="email">
+ 		
+            <label>Password</label>
+            <input type="password" v-model="password">
+           
+            <button @click ="login">Registrar</button>
+            <hr>
+            <label>Direccion</label>
+           	<label>Calle</label>
+            <input type="text" v-model="street">
+
+            <label>Suite</label>
+            <input type="text" v-model="suite">
+
+        </div>
+
+	</div>
+	
+	<script type="text/javascript">
+		const { createApp } = Vue
+        const data=null
+        const error=null
+
+        var test = createApp({
+        data() {
+            return {
+                users:null,
+                nombre:sessionStorage.getItem("nombre"),
+                
+            }
+        },mounted(){
+            fetch('users.json')
+            .then((res) => res.json())
+            .then((json) => (this.users=json))
+            .catch((err) => (console.log(err)))
+        } 
+    	}).mount('#contenedor')
+
+	</script>
+</body>
+</html>
