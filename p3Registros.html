@@ -6,35 +6,41 @@
 	<title>Registros</title>
 	 <link href="estilo.css" rel="stylesheet" type="text/css">
 	<script src="https://unpkg.com/vue@3"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 	<div id="contenedor">
 		<h3>Hola, {{nombre}}</h3>
+		<button @click ="action('añadir',null)">Añadir</button>
+		<table v-if="(inAction=='show')">
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Acciones</th>
+			<tr v-for="(item,index) in users">
+				
+				<td>{{item.id}}</td>
+				
+				<td >{{item.name}}</td>
+			
+				<td>{{item.username}}</td>
+				
+				<td>{{item.email}}</td>
 
-		<table >
-			<tr>
-				<th>ID</th>
-				<td v-for="item in users">{{item.id}}</td>
+				<td>
+					<button @click ="action('editar',item,index)">Editar usuario</button>
+					<button @click ="eliminar(index)">Eliminar usuario</button>
+				</td>
 			</tr>
-			<tr>
-				<th>Nombre</th>
-				<td v-for="item in users">{{item.name}}</td>
-			</tr>
-			<tr>
-				<th>Username</th>
-				<td v-for="item in users">{{item.username}}</td>
-			</tr>
-			<tr>
-				<th>Email</th>
-				<td v-for="item in users">{{item.email}}</td>
-			</tr>
+
 		</table>
+
 		<hr>
-
-		<div class="form">
-
-			<h3>Registrar usuario</h3>
-            <label>Nombre</label>
+		<form v-if="(inAction=='')">
+			<div class="form">
+			<fieldset>
+				<label>Nombre</label>
            
             <input type="text" v-model="name">
             <label>Username</label>
@@ -80,8 +86,13 @@
 
             <label>Estrategia de negocio</label>
             <input type="text" v-model="bs">
-            <button @click ="registrar">Registrar usuario</button>
+            <button @click ="guardar">Guardar</button>
+            <button @click ="cancelar">Cancelar</button>
+			</fieldset>
+            
         </div>
+		</form>
+		
 
 	</div>
 	
@@ -94,13 +105,76 @@
         data() {
             return {
                 users:null,
-                nombre:sessionStorage.getItem("nombre"),name:"",username:"",email:"",password:"",street:"",suite:"",city:"",lat:"",lng:"",phone:"",website:"",company_name:"",catchPhrase:"",bs:""
+                inAction:"show",
+                nombre:sessionStorage.getItem("nombre"),
+                name:"",
+                username:"",
+                email:"",
+                password:"",
+                street:"",
+                suite:"",
+                city:"",
+                lat:"",
+                lng:"",
+                phone:"",
+                website:"",
+                company_name:"",
+                catchPhrase:"",
+                bs:"",
+                id:0,
+                act:true
                 
             }
         },methods:{
-            registrar(e){
-                 e.preventDefault();
-                 var nameU = this.name;
+        	action(m,u,i){
+        		
+				if(m=="añadir"){
+					this.act=false;
+					this.inAction="";
+					this.name="";
+					this.username="";
+					this.email="";
+	                this.password="";
+	                this.street="";
+	                this.suite="";
+	                this.city="";
+	                this.lat="";
+	                this.lng="";
+	                this.phone="";
+	                this.website="";
+	                this.company_name="";
+	                this.catchPhrase="";
+	                this.bs="";
+				}
+				if (m=="editar") {
+					this.id = i;
+					console.log(i);
+					console.log(u.name);
+					this.name=this.users[i].name;
+					this.username=this.users[i].username;
+					this.email=this.users[i].email;
+	                this.password=this.users[i].password;
+	                this.street=this.users[i].address.street;
+	                this.suite=this.users[i].address.suite;
+	                this.city=this.users[i].address.city;
+	                this.lat=this.users[i].address.geo.lat;
+	                this.lng=this.users[i].address.geo.lng;
+	                this.phone=this.users[i].phone;
+	                this.website=this.users[i].website;
+	                this.company_name=this.users[i].company.name;
+	                this.catchPhrase=this.users[i].company.name;
+	                this.bs=this.users[i].company.bs;
+		            this.inAction="";	
+					console.log(this.id);
+				}
+			},
+			cancelar(){
+				this.inAction="show";
+			},guardar(i){
+
+				 var iD = this.id;
+				 var idU = this.users.length+1;
+				 var nameU = this.name;
                  var usernameU = this.username;
                  var email_usuario = this.email;
                  var contra = this.password;
@@ -114,21 +188,69 @@
                  var nombreCompania = this.company_name;
                  var frase = this.catchPhrase;
                  var estrategia = this.bs;
-                 var idU = this.users.length+1;
 
-
-                 this.users.push({id:idU,name:nameU,username:usernameU,email:email_usuario,password:contra,address:{street:streetU,suite:suiteU,city:cityU,lat:latU,lng:lngU},company:{phone:phoneU,website:websiteU,name:nombreCompania,catchPhrase:frase,bs:estrategia}});
+				 if (this.act==true) {
+				 	
+				 	this.users[iD].name=nameU;
+					this.users[iD].username=usernameU;
+					this.users[iD].email=email_usuario;
+	                this.users[iD].password=contra;
+	                this.users[iD].street = streetU;
+	               	this.users[iD].address.suite =suiteU;
+	                this.users[iD].address.city=cityU;
+	              	this.users[iD].address.geo.lat =latU;
+	                this.users[iD].address.geo.lng=lngU;
+	                this.users[iD].phone=phoneU;
+	                this.users[iD].website=websiteU;
+	                this.users[iD].company.name=nombreCompania;
+	                this.users[iD].company.name=frase;
+	                this.users[iD].company.bs=estrategia;
+	                swal("Correcto", "Usuario actualizado correctamente", "success");
+		            this.inAction="show";
+		            
+		           				
+				 }else{
+                 	
+                 	this.users.push({id:idU,name:nameU,username:usernameU,email:email_usuario,password:contra,address:{street:streetU,suite:suiteU,city:cityU,lat:latU,lng:lngU},company:{phone:phoneU,website:websiteU,name:nombreCompania,catchPhrase:frase,bs:estrategia}});
+                	 swal("Correcto", "Usuario registrado correctamente", "success");
+                	 this.inAction="show";
+                	 this.act=true;
+				 }
+				
                 
+			},
+
+			eliminar(id){
+				swal({
+				  title: "Estas seguro?",
+				  text: "Se eliminara el registro definitivamente",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				  	this.users.splice(id,1);
+				    swal("El usuario ha sido eliminado correctamente", {
+				      icon: "success",
+				    });
+				  } else {
+				    swal("Se ha cancelado la eliminacion");
+				  }
+				});
+            	
             }
-        }
-        	,mounted(){
+
+        	},
+
+        	mounted(){
             fetch('users.json')
             .then((res) => res.json())
             .then((json) => (this.users=json))
             .catch((err) => (console.log(err)))
         	}
     	}).mount('#contenedor')
-
+		console.log(this.id);
 	</script>
 </body>
 </html>
