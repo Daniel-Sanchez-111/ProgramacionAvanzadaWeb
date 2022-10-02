@@ -24,13 +24,9 @@
 						<div class="row m-2">
 							
 							<div class="col">
-								<p>Productos</p>
+								<p>Producto</p>
 							</div>
-							<div class="col">
-								<button data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-info float-end">
-									Añadir producto
-								</button>
-							</div>
+							
 
 						</div>
 
@@ -39,23 +35,46 @@
 					<!--CONTENT-->
 
 					<div class="row">
-						
-						 
-						
-						<div class="col-md-4 col-sm-10 p-2">
+					<?php
+
+						require '../app/ProductsController.php';
+						$clase = new ProductsController();
+						$slug = $_GET['slug'];
+						$details = $clase->cargarDetalles($slug);
+						$categorias = $details->categories;
+						$etiquetas = $details->tags;
+						echo '<div class="col-md-4 col-sm-10 p-2">
 							
 							<div class="card mb-1" >
-							  <img src="../public/img/logo.png" class="card-img-top img-fluid" alt="...">
+							  <img src="'.$details->cover.'" class="card-img-top img-fluid" alt="...">
 							  <div class="card-body">
 							    <h5 class="card-title text-center">
-							    	Tostachos
+							    	'.$details->name.'
 							    </h5>
     							<h6 class="card-subtitle mb-2 text-muted text-center">
-    								Botanas
+    								'.$details->features.'
     							</h6>
 							    <p class="card-text">
-							    	Some quick example text to build on the card title and make up the bulk of the card's content
+							    	'.$details->description.'
 							    </p>
+							     <p class="card-text">
+							    	Marca '.$details->brand->name.'
+							    </p>
+							    
+							    <p class="card-text">Categorias: ';
+							     foreach ($categorias as $valor) {
+							    		$cat = " ";
+							    		echo $cat.$valor->name;
+							    	}
+							    echo '</p>
+							    <p class="card-text">Tags: ';
+							     foreach ($etiquetas as $valor) {
+							    		$tag = " ";
+							    		echo $tag.$valor->name;
+							    	}
+							    echo '</p>'
+
+							    ;?>
 							    <div class="row">
 							    	<a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-warning col-6">
 								    	Editar
@@ -68,11 +87,12 @@
 							</div>
 
 
-						</div>
+						</div>';
 
 						 
-
+					
 					</div>
+				
 
 				</div>
 
@@ -131,7 +151,9 @@
 				});
 			}
 		</script>
-
+<script type="text/javascript">
+	,
+</script>
 	</body>
 </html>
 

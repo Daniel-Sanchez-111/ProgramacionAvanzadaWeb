@@ -65,7 +65,7 @@
 									    <a onclick="remove(this)" href="#" class="btn btn-danger col-6">
 									    	Eliminar
 									    </a>
-									    <a href="details.php" class="btn btn-info col-12">
+									    <a href="details.php?slug='.$valor->slug.'" class="btn btn-info col-12">
 									    	Detalles
 									    </a>
 								    </div>
@@ -95,7 +95,7 @@
 		      <div class="modal-body">
 		        
 		        <form method="post" action="../app/ProductsController.php" class="form" enctype="multipart/form-data">
-		        	
+
 			      	<div class="input-group mb-3">
 					  <span class="input-group-text" id="basic-addon1">Name</span>
 					  <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
