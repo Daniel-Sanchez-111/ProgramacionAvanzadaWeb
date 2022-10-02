@@ -40,42 +40,40 @@
 
 					<div class="row">
 						<?php 
-							session_start();
+							
 							require '../app/ProductsController.php'; 
 							$token = strip_tags($_SESSION['token']);
-						?>
-						<?php
-						$clase = new ProductsController();
-						$array = $clase->cargar($token); 
-						foreach ($array as $valor) {
-							echo '<div class="col-md-3 col-sm-10 p-2">
-							
-							<div class="card mb-1" >
-							  <img src="'.$valor->cover.'" class="card-img-top img-fluid" alt="...">
-							  <div class="card-body">
-							    <h5 class="card-title text-center">
-							    	'.$valor->name.'
-							    </h5>
-							    <p class="card-text">
-							    	'.$valor->description.'
-							    </p>
-							    <div class="row">
-							    	<a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-warning col-6">
-								    	Editar
-								    </a>
-								    <a onclick="remove(this)" href="#" class="btn btn-danger col-6">
-								    	Eliminar
-								    </a>
-								    <a href="details.php" class="btn btn-info col-12">
-								    	Detalles
-								    </a>
-							    </div>
-							  </div>
-							</div>
+							$clase = new ProductsController();
+							$array = $clase->cargar($token); 
+							foreach ($array as $valor) {
+								echo '<div class="col-md-3 col-sm-10 p-2">
+								
+								<div class="card mb-1" >
+								  <img src="'.$valor->cover.'" class="card-img-top img-fluid" alt="...">
+								  <div class="card-body">
+								    <h5 class="card-title text-center">
+								    	'.$valor->name.'
+								    </h5>
+								    <p class="card-text">
+								    	'.$valor->description.'
+								    </p>
+								    <div class="row">
+								    	<a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-warning col-6">
+									    	Editar
+									    </a>
+									    <a onclick="remove(this)" href="#" class="btn btn-danger col-6">
+									    	Eliminar
+									    </a>
+									    <a href="details.php" class="btn btn-info col-12">
+									    	Detalles
+									    </a>
+								    </div>
+								  </div>
+								</div>
 
 
-						</div>';
-						} ?> 
+							</div>';
+							} ?> 
 						
 					</div>
 
@@ -90,24 +88,48 @@
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">Añadir producto</h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
 		        
-		        <?php for ($i=0; $i < 6; $i++): ?>
+		        <form method="post" action="../app/ProductsController.php" class="form" enctype="multipart/form-data">
+			      	<div class="input-group mb-3">
+					  <span class="input-group-text" id="basic-addon1">Name</span>
+					  <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
+					</div>
 
-		      	<div class="input-group mb-3">
-				  <span class="input-group-text" id="basic-addon1">@</span>
-				  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-				</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text" id="basic-addon1">Slug</span>
+					  <input type="text" class="form-control" name="slug" placeholder="Slug" aria-label="Slug" aria-describedby="basic-addon1">
+					</div>
 
-				<?php endfor; ?>
+					<div class="input-group mb-3">
+					  <span class="input-group-text" id="basic-addon1">Description</span>
+					  <input type="textarea" class="form-control" name="description" placeholder="Description" aria-label="Description" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text" id="basic-addon1">Features</span>
+					  <input type="textarea" class="form-control" name="features" placeholder="Features" aria-label="Features" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-3">
+					  <span class="input-group-text" id="basic-addon1">Brand ID</span>
+					  <input type="text" class="form-control" name="brand_id" placeholder="Brand ID" aria-label="brand_id" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group mb-3">
+					  <input type="file" class="form-control" id="file" name="file"  accept="image/*" data-max-size="1507459">
+					  <label class="input-group-text" for="inputGroupFile02">Upload</label>
+					</div>
 
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+
+				
+
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			        <button type="submit" class="btn btn-primary">Confirmar</button>
+			        <input type="hidden" value="create" name="action">
+		        </form>
 		      </div>
 		    </div>
 		  </div>
