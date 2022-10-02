@@ -58,6 +58,9 @@
 								    <p class="card-text">
 								    	'.$valor->description.'
 								    </p>
+								    <p class="card-text">
+								    	'.$valor->brand->name.'
+								    </p>
 								    <div class="row">
 								    	<a href="#" data-bs-toggle="modal" data-bs-target="#createProductModal" class="btn btn-warning col-6">
 									    	Editar
@@ -117,11 +120,11 @@
 
 					  <div class="input-group mb-3">
 						  <label class="input-group-text" for="inputGroupSelect01">Marcas</label>
-						  <select class="form-select" id="inputGroupSelect01" >
+						  <select class="form-select" id="inputGroupSelect01" name="brand_id">
 						    <option selected>Choose...</option>
 						   	<?php		    
 							foreach ($marcas as $valor) {
-						    echo '<option value="'.$valor->id.'" name="brand_id">'.$valor->name.'</option>';
+						    echo '<option value="'.$valor->id.','.$valor->name.'" >'.$valor->name.'</option>';
 						   	}
 						    ?>
 						  </select>

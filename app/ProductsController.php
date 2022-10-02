@@ -6,16 +6,18 @@ session_start();
 		case 'create':
 			
 			$ProductsController = new ProductsController();
-
-
+			$brand = $_POST['brand_id'];
+			$brand_explode = explode(',', $brand);
+			$brand_id=$brand_explode[0];
+			$brand_name=$brand_explode[1];
 			$name = strip_tags($_POST['name']);
 			$slug = strip_tags($_POST['slug']);
 			$description = strip_tags($_POST['description']);
 			$features = strip_tags($_POST['features']);
-			$brand_id = strip_tags($_POST['brand_id']);
 			
 			
-			$ProductsController->createProduct($name,$slug,$description,$features,$brand_id);
+			
+			$ProductsController->createProduct($name,$slug,$description,$features,$brand_id,$brand_name);
 
 		break; 
 	}
@@ -47,7 +49,7 @@ session_start();
 			return $response->data;
 
 		}
-		public function createProduct($name,$slug,$description,$features,$brand_id)
+		public function createProduct($name,$slug,$description,$features,$brand_id,$brand_name)
 		{
 
 			$cover = $_FILES['file']['tmp_name'];
@@ -63,7 +65,7 @@ session_start();
 			  CURLOPT_FOLLOWLOCATION => true,
 			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			  CURLOPT_CUSTOMREQUEST => 'POST',
-			  CURLOPT_POSTFIELDS => array('name' => $name,'slug' => $slug,'description' => $description,'features' => $features,'brand_id' => $brand_id,
+			  CURLOPT_POSTFIELDS => array('name' => $name,'slug' => $slug,'description' => $description,'features' => $features,'brand_id'=>$brand_id,'brand_name' =>$brand_name,
 			  	'cover'=> new CURLFILE($cover)
 			 
 			),
