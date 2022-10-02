@@ -44,6 +44,7 @@
 							require '../app/ProductsController.php'; 
 							$token = strip_tags($_SESSION['token']);
 							$clase = new ProductsController();
+							$marcas = $clase->cargarMarcas(); 
 							$array = $clase->cargar($token); 
 							foreach ($array as $valor) {
 								echo '<div class="col-md-3 col-sm-10 p-2">
@@ -94,6 +95,7 @@
 		      <div class="modal-body">
 		        
 		        <form method="post" action="../app/ProductsController.php" class="form" enctype="multipart/form-data">
+		        	
 			      	<div class="input-group mb-3">
 					  <span class="input-group-text" id="basic-addon1">Name</span>
 					  <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name" aria-describedby="basic-addon1">
@@ -112,10 +114,19 @@
 					  <span class="input-group-text" id="basic-addon1">Features</span>
 					  <input type="textarea" class="form-control" name="features" placeholder="Features" aria-label="Features" aria-describedby="basic-addon1">
 					</div>
-					<div class="input-group mb-3">
-					  <span class="input-group-text" id="basic-addon1">Brand ID</span>
-					  <input type="text" class="form-control" name="brand_id" placeholder="Brand ID" aria-label="brand_id" aria-describedby="basic-addon1">
-					</div>
+
+					  <div class="input-group mb-3">
+						  <label class="input-group-text" for="inputGroupSelect01">Marcas</label>
+						  <select class="form-select" id="inputGroupSelect01" >
+						    <option selected>Choose...</option>
+						   	<?php		    
+							foreach ($marcas as $valor) {
+						    echo '<option value="'.$valor->id.'" name="brand_id">'.$valor->name.'</option>';
+						   	}
+						    ?>
+						  </select>
+						</div>
+
 					<div class="input-group mb-3">
 					  <input type="file" class="form-control" id="file" name="file"  accept="image/*" data-max-size="1507459">
 					  <label class="input-group-text" for="inputGroupFile02">Upload</label>
