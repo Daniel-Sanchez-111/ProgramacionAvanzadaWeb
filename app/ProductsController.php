@@ -2,10 +2,7 @@
 session_start();
 
 	if (isset($_POST['action'])) {
-	switch ($_POST['action']) {
-		case 'create':
-			
-			$ProductsController = new ProductsController();
+		$ProductsController = new ProductsController();
 			$brand = $_POST['brand_id'];
 			$brand_explode = explode(',', $brand);
 			$brand_id=$brand_explode[0];
@@ -14,12 +11,20 @@ session_start();
 			$slug = strip_tags($_POST['slug']);
 			$description = strip_tags($_POST['description']);
 			$features = strip_tags($_POST['features']);
-			
-			
-			
+	switch ($_POST['action']) {	
+		case 'create':	
 			$ProductsController->createProduct($name,$slug,$description,$features,$brand_id,$brand_name);
 
 		break; 
+		case 'edit':
+			$id = $_POST["id"];
+            $ProductsController->editarProducto($name, $slug, $description, $features, $brand_id, $id);
+		break;
+
+		 case 'delete':
+		 	$id = $_POST["id"];
+            $ProductsController->eliminarProducto($id);
+         break;
 	}
 }
 
@@ -90,6 +95,65 @@ session_start();
 			header("Location:../?error=true");
 		}
 		}
+
+		public function editarProducto($name,$slug,$description,$features,$brand_id,$id)
+		{
+			$curl = curl_init();
+        
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'PUT',
+          CURLOPT_POSTFIELDS => 'name='.$name.'&slug='.$slug.'&description='.$description.'&features='.$features.'&brand_id='.$id.'&id='.$id,
+          CURLOPT_HTTPHEADER => array(
+            'Authorization: Bearer '.$_SESSION['token'],
+            
+          ),
+        ));
+
+        	 $response = curl_exec($curl);
+        
+	        curl_close($curl);
+	        $response = json_decode($response);
+	     
+	        if(isset($response->code) && $response->code > 0){
+	            header("Location: ../products");
+	        }else{
+	            header("Location: ../products?error=true");
+	        }
+		}
+
+		public function eliminarProducto($id)
+		{
+			 $curl = curl_init();
+
+	        curl_setopt_array($curl, array(
+	        CURLOPT_URL => 'https://crud.jonathansoto.mx/api/products/'.$id,
+	        CURLOPT_RETURNTRANSFER => true,
+	        CURLOPT_ENCODING => '',
+	        CURLOPT_MAXREDIRS => 10,
+	        CURLOPT_TIMEOUT => 0,
+	        CURLOPT_FOLLOWLOCATION => true,
+	        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	        CURLOPT_CUSTOMREQUEST => 'DELETE',
+	        CURLOPT_HTTPHEADER => array(
+	            'Authorization: Bearer '.$_SESSION['token'],
+	            
+	        ),
+	        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        
+        return $response;
+    	}
+		
 
 		public function cargarMarcas()
 		{

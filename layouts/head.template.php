@@ -4,6 +4,7 @@
 			Productos
 		</title>
 		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<style type="text/css">
 			aside{
 				height: 90vh;
