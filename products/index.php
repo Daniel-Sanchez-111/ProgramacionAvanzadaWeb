@@ -42,9 +42,11 @@
 						<?php 
 							
 							require '../app/ProductsController.php'; 
+							require '../app/BrandsController.php'; 
 							$token = strip_tags($_SESSION['token']);
 							$clase = new ProductsController();
-							$marcas = $clase->cargarMarcas(); 
+							$claseMarcas = new BrandsController();
+							$marcas = $claseMarcas->cargarMarcas(); 
 							$array = $clase->cargar($token); 
 							foreach ($array as $valor): ?> 
 								<div class="col-md-3 col-sm-10 p-2">
