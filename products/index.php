@@ -148,6 +148,7 @@
 			        <button type="submit" class="btn btn-primary">Confirmar</button>
 			        <input type="hidden" name="id" id="id" value="">
          			<input type="hidden" id="action" name="action" value="create">
+         			<input type="hidden" name="global_token" value="<?= $_SESSION['global_token']?>">
 		        </form>
 		      </div>
 		    </div>
@@ -191,6 +192,7 @@
 				  	const data = new FormData();
 				      data.append("id", target);
 				      data.append("action", "delete");
+				      data.append("global_token",'<?= $_SESSION['global_token']?>');
 				      axios.post('../app/ProductsController.php', data)
 				      .then(function (response) {
 				      	swal("Poof! Your imaginary file has been deleted!", {

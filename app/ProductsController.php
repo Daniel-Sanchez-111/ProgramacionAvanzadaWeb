@@ -2,32 +2,34 @@
 session_start();
 
 	if (isset($_POST['action'])) {
-		$ProductsController = new ProductsController();
-			
-			$name = strip_tags($_POST['name']);
-			$slug = strip_tags($_POST['slug']);
-			$description = strip_tags($_POST['description']);
-			$features = strip_tags($_POST['features']);
-	switch ($_POST['action']) {	
-		case 'create':
+		 if( isset($_POST['global_token']) && $_POST['global_token'] == $_SESSION['global_token'] ) {
+				$ProductsController = new ProductsController();
+					
+					$name = strip_tags($_POST['name']);
+					$slug = strip_tags($_POST['slug']);
+					$description = strip_tags($_POST['description']);
+					$features = strip_tags($_POST['features']);
+			switch ($_POST['action']) {	
+				case 'create':
 
-			$brand_explode = explode(',', $brand);
-			$brand_id=$brand_explode[0];
-			$brand_name=$brand_explode[1];	
-			$ProductsController->createProduct($name,$slug,$description,$features,$brand_id,$brand_name);
+					$brand_explode = explode(',', $brand);
+					$brand_id=$brand_explode[0];
+					$brand_name=$brand_explode[1];	
+					$ProductsController->createProduct($name,$slug,$description,$features,$brand_id,$brand_name);
 
-		break; 
-		case 'edit':
-		$brand = $_POST['brand_id'];
-			$id = $_POST["id"];
-            $ProductsController->editarProducto($name, $slug, $description, $features, $brand_id, $id);
-		break;
+				break; 
+				case 'edit':
+				$brand = $_POST['brand_id'];
+					$id = $_POST["id"];
+		            $ProductsController->editarProducto($name, $slug, $description, $features, $brand_id, $id);
+				break;
 
-		 case 'delete':
-		 	$id = $_POST["id"];
-            $ProductsController->eliminarProducto($id);
-         break;
-	}
+				 case 'delete':
+				 	$id = $_POST["id"];
+		            $ProductsController->eliminarProducto($id);
+		         break;
+			}
+}
 }
 
 	Class ProductsController{
