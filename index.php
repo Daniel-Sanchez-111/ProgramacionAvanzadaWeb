@@ -21,7 +21,9 @@
 		<div class="container">
 			
 			<section>
-				
+				<?php
+					include_once 'app/config.php';
+				?>
 				<div class="row justify-content-md-center align-items-center">
 					
 					<div class="col-md-6 border col-lg-6 col-sm-12 login">
@@ -60,7 +62,7 @@
 							</button>
 
 							<input type="hidden" value="access" name="action">
-
+							<input type="hidden" name="global_token" value="<?= $_SESSION['global_token']?>">
 						</form>
 
 					</div> 
