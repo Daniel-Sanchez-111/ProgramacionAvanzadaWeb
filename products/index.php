@@ -1,3 +1,4 @@
+<?php include "../app/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -70,7 +71,7 @@
 									    <a onclick="remove(<?= $valor->id?>)" href="#" class="btn btn-danger col-6">
 									    	Eliminar
 									    </a>
-									    <a href="details.php?slug=<?= $valor->slug ?>" class="btn btn-info col-12">
+									    <a href="<?=BASE_PATH?>products/details/<?=$valor->slug ?>/" class="btn btn-info col-12">
 									    	Detalles
 									    </a>
 								    </div>
@@ -100,7 +101,7 @@
 		      </div>
 		      <div class="modal-body">
 		        
-		        <form method="post" action="../app/ProductsController.php" class="form" enctype="multipart/form-data">
+		        <form method="post" action="<?=BASE_PATH?>prods" class="form" enctype="multipart/form-data">
 
 			      	<div class="input-group mb-3">
 					  <span class="input-group-text" id="basic-addon1">Name</span>
@@ -154,7 +155,7 @@
 		    </div>
 		  </div>
 		</div>
-
+<!--uWV9K24K5a&0Rk -->
 		<?php include "../layouts/scripts.template.php"; ?>
 
 		<script type="text/javascript">
@@ -193,7 +194,7 @@
 				      data.append("id", target);
 				      data.append("action", "delete");
 				      data.append("global_token",'<?= $_SESSION['global_token']?>');
-				      axios.post('../app/ProductsController.php', data)
+				      axios.post('<?=BASE_PATH?>prods', data)
 				      .then(function (response) {
 				      	swal("Poof! Your imaginary file has been deleted!", {
 					      icon: "success",

@@ -46,19 +46,19 @@ Class AuthController{
 
 		if ( isset($response->code) && $response->code > 0) {
 
-			session_start();
+			
 
 			$_SESSION['name']= $response->data->name;
 			$_SESSION['lastname']= $response->data->lastname;
 			$_SESSION['avatar']= $response->data->avatar;
 			$_SESSION['token']= $response->data->token;
 
-			header("Location:../products");
+			header("Location:products");
 		}else{
 
 
 			#var_dump($response);
-			header("Location:../?error=true");
+			header("Location:?error=true");
 		}
 
 	}

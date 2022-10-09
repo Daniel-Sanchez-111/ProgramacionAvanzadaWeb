@@ -1,3 +1,4 @@
+<?php include "app/config.php"; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -35,7 +36,7 @@
 							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
 						</p>
 
-						<form method="post" action="app/AuthController.php" class="form">
+						<form method="post" action="<?=BASE_PATH?>autorizacion" class="form">
 							
 							<div>
 								<label>

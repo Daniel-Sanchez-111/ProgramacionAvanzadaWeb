@@ -1,4 +1,8 @@
+Options +FollowSymLinks -MultiViews 
+RewriteEngine on
 
-RewriteEngine On
 
-RewriteRule ^login$ app/AuthController.php [L]
+RewriteRule ^autorizacion$ app/AuthController.php
+RewriteRule ^login$ index.php
+RewriteRule ^prods$ app/ProductsController.php
+RewriteRule ^products/details/(.+)/$ products/details.php?slug=$1 [L]
