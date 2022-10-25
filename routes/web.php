@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\ClientController;
 /*Route::get('/', function () {
     return view('welcome');
 });
@@ -30,3 +30,6 @@ Route::get('users/{id}', [UserController::class, 'show']);
 
 Route::post('users/', [UserController::class, 'store']);
 
+Route::get('clients/', [ClientController::class, 'index']);
+
+Route::get('clients/{id}', [ClientController::class, 'show']);
