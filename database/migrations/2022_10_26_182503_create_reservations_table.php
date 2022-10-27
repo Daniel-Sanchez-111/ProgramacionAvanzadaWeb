@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('room_number')->unique();
             $table->string('room_type');
             $table->integer('cost');
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('number_of_guest');
             $table->timestamps();
         });

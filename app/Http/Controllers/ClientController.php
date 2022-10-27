@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        return Client::all();
+        return Client::with('reservations')->get();
 
     }
 
@@ -45,9 +45,9 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function show(Client $client,$id)
+    public function show($id)
     {
-        return Client::find($id);
+        return Client::with('reservations')->find($id);
     }
 
     /**

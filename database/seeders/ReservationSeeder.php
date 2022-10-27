@@ -19,6 +19,7 @@ class ReservationSeeder extends Seeder
         $reservation->room_number=254;
         $reservation->room_type="Suite";
         $reservation->cost=2500.00;
+        $reservation->client_id=1;
         $reservation->number_of_guest=3;
         $reservation->save();
 
@@ -26,7 +27,16 @@ class ReservationSeeder extends Seeder
         $reservation->room_number=311;
         $reservation->room_type="Regular";
         $reservation->cost=1100.00;
+        $reservation->client_id=2;
         $reservation->number_of_guest=2;
+        $reservation->save();
+
+        $reservation = new Reservation();
+        $reservation->room_number=221;
+        $reservation->room_type="Regular";
+        $reservation->cost=1500.00;
+        $reservation->client_id=1;
+        $reservation->number_of_guest=4;
         $reservation->save();
     }
 }
