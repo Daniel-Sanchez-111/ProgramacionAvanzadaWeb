@@ -35,7 +35,13 @@ Route::get('clients/', [ClientController::class, 'index']);
 
 Route::get('clients/create', [ClientController::class, 'create']);
 
+Route::put('clients', [ClientController::class, 'update']);
+
 Route::post('clients', [ClientController::class, 'store']);
+
+
+
+Route::get('clients/edit/{id}', [ClientController::class, 'edit']);
 
 Route::get('clients/{id}', [ClientController::class, 'show']);
 
