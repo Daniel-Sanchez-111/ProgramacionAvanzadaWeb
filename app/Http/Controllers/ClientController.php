@@ -37,9 +37,9 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $client = Client::create($request->all());
-        
-        return $client;
+        Client::create($request->all());
+        $clients = Client::with('reservations')->get();
+        return view('clients.index',compact('clients'));
 
     }
 
@@ -51,8 +51,6 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-
-
         return Client::with('reservations')->find($id);
     }
 

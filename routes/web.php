@@ -5,23 +5,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReservationController;
-/*Route::get('/', function () {
+
+Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hola', function () {
-    echo "hola";
-});
-
-Route::get('/saludo/{name}', function ($name) {
-    echo "hola ".$name;
-});
-
-Route::get('/suma/{num1}/{num2}/{num3}?', function ($num1,$num2,$num3=0) {
-    echo $num1+$num2+$num3;
-})->where(['num1','[0-9]+'],['num2','[0-9]+']);
-*/
-
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
 
 Route::get('users/', [UserController::class, 'index']);
 
