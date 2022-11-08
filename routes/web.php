@@ -30,7 +30,9 @@ Route::put('clients', [ClientController::class, 'update']);
 
 Route::post('clients', [ClientController::class, 'store']);
 
-
+Route::get('/prueba', function () {
+    return view('login/');
+})->middleware('auth');
 
 Route::get('clients/edit/{id}', [ClientController::class, 'edit']);
 
